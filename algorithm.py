@@ -72,3 +72,15 @@ class read_excelfile:
             c = itemindex[0][0]
             asset.append(var2 + str(round(self.a[num][c, b],2)))
         return asset
+
+    def absolute3(self,var1,var2):
+        asset = []
+        for num in range(0, self.num):
+            if(var2 == '净利润'):
+                column = (np.argwhere(self.a[num] == var1))[2][1]
+                row = (np.argwhere(self.a[num] == var2))[2][0]
+            else:
+                column = (np.argwhere(self.a[num] == var1))[0][1]
+                row = (np.argwhere(self.a[num] == var2))[0][0]
+            asset.append(var1+'的'+var2+': ' + str(round(self.a[num][row, column],2)))
+        return asset
