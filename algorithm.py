@@ -55,12 +55,20 @@ class read_excelfile:
         ration = ration/self.num
         return ration
 
-    def absolute1(self,var):
+    def absolute1(self,var1,var2):
         asset = []
         for num in range(0, self.num):
-            itemindex = np.argwhere(self.a[num] == var)
+            itemindex = np.argwhere(self.a[num] == var1)
             b = itemindex[0][1] + 1
             c = itemindex[0][0]
-            asset.append(var + str(round(self.a[num][c, b],2)))
+            asset.append(var2 + str(round(self.a[num][c, b],2)))
         return asset
 
+    def absolute2(self,var1,var2):
+        asset = []
+        for num in range(0, self.num):
+            itemindex = np.argwhere(self.a[num] == var1)
+            b = itemindex[0][1] + 2
+            c = itemindex[0][0]
+            asset.append(var2 + str(round(self.a[num][c, b],2)))
+        return asset

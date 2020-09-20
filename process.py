@@ -116,10 +116,10 @@ class MyPyQT_Form(Ui_MainWindow):
     def parentstats(self):
         result = 0
         if (self.radioButton_4.isChecked()):
-            numindex = self.comboBox_6.currentIndex()
+            numindex = self.comboBox_8.currentIndex()
             result = self.switch_index(numindex)
         elif (self.radioButton_5.isChecked()):
-            numindex = self.comboBox_7.currentIndex()
+            numindex = self.comboBox_9.currentIndex()
             result = self.switch_index(numindex)
         else:
 
@@ -130,29 +130,37 @@ class MyPyQT_Form(Ui_MainWindow):
     def switch_index(self,value):
         tabindex = self.tabWidget.currentIndex()
         if(tabindex == 0):
-            excelfile = read_excelfile(self.filename, '合并资产负债表')
-            fid = excelfile.readmulti()
-            if(fid == -1):
+            excelfile1 = read_excelfile(self.filename, '合并资产负债表')
+            excelfile2 = read_excelfile(self.filename, '合并损益表')
+            fid1 = excelfile1.readmulti()
+            fid2 = excelfile2.readmulti()
+            if((fid1 == -1)or(fid2 == -1)):
                 return -1
             else:
-                return self.switch_textindex(excelfile, value)
+                return self.switch_textindex(excelfile1,excelfile2, value)
         elif(tabindex == 1):
-            excelfile = read_excelfile(self.filename, '母公司资产负债表')
-            fid = excelfile.readmulti()
-            if(fid == -1):
+            excelfile1 = read_excelfile(self.filename, '母公司资产负债表')
+            excelfile2 = read_excelfile(self.filename, '母公司损益表')
+            fid1 = excelfile1.readmulti()
+            fid2 = excelfile2.readmulti()
+            if((fid1 == -1)or(fid2 == -1)):
                 return -1
             else:
-                return self.switch_textindex(excelfile, value)
+                return self.switch_textindex(excelfile1,excelfile2, value)
 
-    def switch_textindex(self,read_excelfile ,value):
+    def switch_textindex(self,read_excelfile1,read_excelfile2,value):
         if (value == 0):
-            return read_excelfile.absolute1('资产总计')
+            return read_excelfile1.absolute1('资产总计','资产：')
         elif (value == 1):
-            return read_excelfile.absolute1('负债合计')
+            return read_excelfile1.absolute1('负债合计','负债：')
         elif (value == 2):
-            return read_excelfile.absolute('')
+            return read_excelfile1.absolute1('股东或所有者权益合计','净资产：')
         elif (value == 3):
-            return read_excelfile.absolute('')
+            return read_excelfile2.absolute2('一营业总收入','收入：')
+        elif (value == 4):
+            return read_excelfile2.absolute2('五净利润净亏损以号填列','净利润：')
+
+
 
     #负债率计算，返回值为平均负债率
     def loadingrate(self):
